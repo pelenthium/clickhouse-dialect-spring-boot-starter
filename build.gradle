@@ -31,5 +31,4 @@ bintray {
     websiteUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
     labels = ['Spring', 'JDBC', 'Clickhouse']
     syncToMavenCentral = false
-    version project.version
 }
