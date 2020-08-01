@@ -15,29 +15,29 @@ repositories {
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot:2.3.2.RELEASE"
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.3.2.RELEASE'
+    compile "org.springframework.boot:spring-boot:2.3.2.RELEASE"
+    compile 'org.springframework.boot:spring-boot-starter-data-jdbc:2.3.2.RELEASE'
 }
-//
-//bintray {
-//    user = System.getenv('BINTRAY_USER')
-//    apiKey = System.getenv('BINTRAY_KEY')
-//    pkg {
-//        repo = 'maven'
-//        name = 'clickhouse-dialect-spring-boot-starter'
-//        userOrg = 'pelenthium'
-//        licenses = ['MIT']
-//        vcsUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
-//        githubRepo = 'pelenthium/clickhouse-dialect-spring-boot-starter'
-//        issueTrackerUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues'
-//        websiteUrl='https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
-//        publicDownloadNumbers = true
-//        labels = ['Spring', 'JDBC', 'Clickhouse']
-//        version {
-//            name = project.version
-//            vcsTag = project.version
-//            released  = new Date()
-//            attributes = [:]
-//        }
-//    }
-//}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    apiKey = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'maven'
+        name = 'clickhouse-dialect-spring-boot-starter'
+        userOrg = 'pelenthium'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
+        githubRepo = 'pelenthium/clickhouse-dialect-spring-boot-starter'
+        issueTrackerUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues'
+        websiteUrl='https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
+        publicDownloadNumbers = true
+        labels = ['Spring', 'JDBC', 'Clickhouse']
+        version {
+            name = project.version
+            vcsTag = project.version
+            released  = new Date()
+            attributes = [:]
+        }
+    }
+}
