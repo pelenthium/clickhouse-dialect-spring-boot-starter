@@ -3,7 +3,8 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - 'master'
+      - 'deploy-test'
+
 jobs:
   validation:
     name: "Gradle Wrapper Validation"
@@ -45,14 +46,9 @@ jobs:
           if_key_exists: fail
       - name: Build with Gradle
         run: |
-          mkdir -p ~/.gradle/
-          echo -n ${{ secrets.OSSRH_GPG_SECRET_KEY }} | base64 --decode > /tmp/oss.key
-          echo "signing.keyId=${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}" >> ~/.gradle/gradle.properties
-          echo "signing.password=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}" >> ~/.gradle/gradle.properties
-          echo "signing.secretKeyRingFile=/tmp/oss.key" >> ~/.gradle/gradle.properties
-          ./gradlew --stacktrace final uploadArchives -PossrhUsername=${{ secrets.OSSRHUSERNAME }} -PossrhPassword='${{ secrets.OSSRHPASSWORD }}' -Prelease.scope=patch
-      - name: Clean up
-        run: rm /tmp/oss.key && rm ~/.gradle/gradle.properties
+          export sKey=`echo -n ${{ secrets.OSSRH_GPG_SECRET_KEY }} | base64 --decode`
+          ./gradlew --stacktrace publish -PossrhUsername=${{ secrets.OSSRHUSERNAME }} -PossrhPassword='${{ secrets.OSSRHPASSWORD }}' -PsKey=${sKey} -PsPassword=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+
 
       - name: End
         run: echo "OK"
