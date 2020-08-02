@@ -8,7 +8,6 @@ plugins {
 apply plugin: 'java'
 
 group = 'com.github.pelenthium.spring'
-version = '0.0.1-SNAPSHOT'
 
 repositories {
     jcenter()
