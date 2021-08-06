@@ -1,13 +1,13 @@
 plugins {
-    id 'nebula.release' version '15.1.0'
+    id 'nebula.release' version '15.3.1'
     id 'nebula.maven-publish' version '17.3.0'
     id 'nebula.source-jar' version '17.3.0'
-    id 'nebula.nebula-bintray' version '8.5.0'
 }
 
 apply plugin: 'java'
 
-group = 'com.github.pelenthium.spring'
+group = 'io.github.pelenthium'
+archivesBaseName="clickhouse-dialect-spring-boot-starter"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -18,18 +18,4 @@ repositories {
 dependencies {
     compile "org.springframework.boot:spring-boot:2.3.2.RELEASE"
     compile 'org.springframework.boot:spring-boot-starter-data-jdbc:2.3.2.RELEASE'
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    apiKey = System.getenv('BINTRAY_KEY')
-    repo = 'maven'
-    pkgName = 'clickhouse-dialect-spring-boot-starter'
-    userOrg = 'pelenthium'
-    licenses = ['MIT']
-    vcsUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
-    issueTrackerUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues'
-    websiteUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
-    labels = ['Spring', 'JDBC', 'Clickhouse']
-    syncToMavenCentral = false
 }
