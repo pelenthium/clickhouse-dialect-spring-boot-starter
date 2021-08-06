@@ -5,7 +5,6 @@ on:
     branches:
       - 'features/github-action-build'
       - 'master'
-  pull_request:
 
 jobs:
   validation:
@@ -20,7 +19,8 @@ jobs:
     needs: validation
     name: Gradle Build
     permissions:
-      contents: write
+      contents: read
+      repository-projects: write
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
