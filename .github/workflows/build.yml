@@ -36,11 +36,5 @@ jobs:
             - ${{ runner.os }}-gradlewrapper-
       - name: Build with Gradle
         run: ./gradlew --info build
-  publish:
-    if: !startsWith(github.ref, 'refs/tags/v')
-    needs: validation
-    name: Gradle Build and Publish
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test task
-        run: echo "OK"
+      - name: Deploy to maven central
+        run:  ./gradlew --info --stacktrace -Dgradle.publish.key=${{ secrets.gradlePublishKey }} -Dgradle.publish.secret=${{ secrets.gradlePublishSecret }} final
