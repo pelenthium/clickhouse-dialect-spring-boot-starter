@@ -1,0 +1,52 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  validation:
+    name: "Gradle Wrapper Validation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+  build:
+    if: (!startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-latest
+    needs: validation
+    name: Gradle Build
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/cache@v1
+        id: gradle-cache
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle/dependency-locks/*.lockfile') }}
+          restore-keys: |
+            - ${{ runner.os }}-gradle-
+      - uses: actions/cache@v1
+        id: gradle-wrapper-cache
+        with:
+          path: ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradlewrapper-${{ hashFiles('gradle/wrapper/*') }}
+          restore-keys: |
+            - ${{ runner.os }}-gradlewrapper-
+      - name: Prepare git remote
+        run: git remote rm origin && git remote add origin git@github.com:pelenthium/clickhouse-dialect-spring-boot-starter.git
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: github.com
+          if_key_exists: fail
+      - name: Build with Gradle
+        run: |
+          ./gradlew --stacktrace clean final publishToSonatype -PsigningPassword='${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}' -PsigningKey='${{ secrets.OSSRH_GPG_SECRET_KEY }}' -PsonatypeUsername='${{ secrets.OSSRHUSERNAME }}' -PsonatypePassword='${{ secrets.OSSRHPASSWORD }}'
+
+      - name: End
+        run: echo "OK"

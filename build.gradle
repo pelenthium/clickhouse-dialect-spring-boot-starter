@@ -1,35 +1,71 @@
 plugins {
-    id 'nebula.release' version '15.1.0'
-    id 'nebula.maven-publish' version '17.3.0'
-    id 'nebula.source-jar' version '17.3.0'
-    id 'nebula.nebula-bintray' version '8.5.0'
+    id 'nebula.release' version '16.0.0'
+    id 'nebula.source-jar' version '18.1.0'
+    id 'nebula.javadoc-jar' version '18.1.0'
+    id 'nebula.maven-manifest' version '18.1.0'
+    id 'nebula.maven-publish' version '18.1.0'
+    id 'nebula.maven-scm' version '18.1.0'
+    id 'nebula.maven-developer' version '18.1.0'
+    id 'nebula.publish-verification' version '18.1.0'
+    id 'nebula.maven-apache-license' version '18.1.0'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+    id 'signing'
 }
 
 apply plugin: 'java'
+apply plugin: 'nebula.release'
+apply plugin: 'nebula.source-jar'
+apply plugin: 'nebula.javadoc-jar'
+apply plugin: 'nebula.maven-manifest'
+apply plugin: 'nebula.maven-scm'
+apply plugin: 'nebula.maven-publish'
+apply plugin: 'nebula.info'
+apply plugin: 'nebula.maven-developer'
+apply plugin: 'nebula.contacts'
+apply plugin: 'nebula.publish-verification'
+apply plugin: 'io.github.gradle-nexus.publish-plugin'
+apply plugin: 'signing'
 
-group = 'com.github.pelenthium.spring'
+contacts {
+    'pelenthium@gmail.com' {
+        moniker 'Sergei Lugovoi'
+        github 'pelenthium'
+    }
+}
+
+group = 'io.github.pelenthium'
+archivesBaseName="clickhouse-dialect-spring-boot-starter"
+description="Clickhose Spring JDBC dialect"
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot:2.3.2.RELEASE"
-    compile 'org.springframework.boot:spring-boot-starter-data-jdbc:2.3.2.RELEASE'
+    implementation "org.springframework.boot:spring-boot:${springVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc:${springVersion}"
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    apiKey = System.getenv('BINTRAY_KEY')
-    repo = 'maven'
-    pkgName = 'clickhouse-dialect-spring-boot-starter'
-    userOrg = 'pelenthium'
-    licenses = ['MIT']
-    vcsUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
-    issueTrackerUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues'
-    websiteUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
-    labels = ['Spring', 'JDBC', 'Clickhouse']
-    syncToMavenCentral = false
+nexusPublishing {
+    repositories {
+        sonatype {  //only for users registered in Sonatype after 24 Feb 2021
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(base64Decode("signingKey"), base64Decode("signingPassword"))
+    sign(publishing.publications)
+}
+
+def base64Decode(String prop) {
+    def val = project.findProperty(prop);
+    return val ?
+        new String(Base64.getDecoder().decode(val.toString())).trim()
+    : ""
 }
