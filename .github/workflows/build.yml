@@ -37,3 +37,11 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew --info build
 
+  publish:
+    if: !startsWith(github.ref, 'refs/tags/v')
+    needs: validation
+    name: Gradle Build and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test task
+        run: echo "OK"
