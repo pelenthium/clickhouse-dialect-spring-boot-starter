@@ -1,10 +1,11 @@
-name: Java CI
+name: Build project
 
 on:
   push:
     branches:
       - '*'
       - '!master'
+      - '!features/github-action-build'
   pull_request:
 
 jobs:
