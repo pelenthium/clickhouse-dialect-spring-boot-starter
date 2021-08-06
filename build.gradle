@@ -5,6 +5,9 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'nebula.maven-publish'
+apply plugin: 'nebula.javadoc-jar'
+apply plugin: 'nebula.source-jar'
 
 group = 'io.github.pelenthium'
 archivesBaseName="clickhouse-dialect-spring-boot-starter"
