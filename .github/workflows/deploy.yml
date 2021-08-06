@@ -36,4 +36,4 @@ jobs:
           restore-keys: |
             - ${{ runner.os }}-gradlewrapper-
       - name: Build with Gradle
-        ./gradlew --info --stacktrace -Dorg.ajoberstar.grgit.auth.username=${{secrets.GITHUB_TOKEN}} -Dgradle.publish.key=${{ secrets.gradlePublishKey }} -Dgradle.publish.secret=${{ secrets.gradlePublishSecret }} final
+        run: ./gradlew --info --stacktrace -Dorg.ajoberstar.grgit.auth.username=${{secrets.GITHUB_TOKEN}} -Dgradle.publish.key=${{ secrets.gradlePublishKey }} -Dgradle.publish.secret=${{ secrets.gradlePublishSecret }} final
