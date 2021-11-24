@@ -1,35 +1,78 @@
 plugins {
-    id 'nebula.release' version '15.1.0'
-    id 'nebula.maven-publish' version '17.3.0'
+    id 'maven-publish'
+    id 'nebula.release' version '15.3.1'
     id 'nebula.source-jar' version '17.3.0'
-    id 'nebula.nebula-bintray' version '8.5.0'
+    id 'org.ajoberstar.grgit' version  '1.7.1'
 }
 
 apply plugin: 'java'
+apply plugin: 'nebula.javadoc-jar'
+apply plugin: 'nebula.source-jar'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-group = 'com.github.pelenthium.spring'
+group = 'io.github.pelenthium'
+archivesBaseName="clickhouse-dialect-spring-boot-starter"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot:2.3.2.RELEASE"
-    compile 'org.springframework.boot:spring-boot-starter-data-jdbc:2.3.2.RELEASE'
+    compile "org.springframework.boot:spring-boot:${springVersion}"
+    compile "org.springframework.boot:spring-boot-starter-data-jdbc:${springVersion}"
 }
 
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    apiKey = System.getenv('BINTRAY_KEY')
-    repo = 'maven'
-    pkgName = 'clickhouse-dialect-spring-boot-starter'
-    userOrg = 'pelenthium'
-    licenses = ['MIT']
-    vcsUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
-    issueTrackerUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues'
-    websiteUrl = 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
-    labels = ['Spring', 'JDBC', 'Clickhouse']
-    syncToMavenCentral = false
+
+signing {
+    required { false }
+    sign configurations.archives
+}
+
+tasks.withType(Sign) {
+    onlyIf { gradle.taskGraph.hasTask("publish") }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+            }
+
+            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+            }
+
+            pom.project {
+                name 'Clickhose Spring JDBC dialect'
+                packaging 'jar'
+                url 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
+
+                scm {
+                    connection 'scm:git:https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter.git'
+                    url 'https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT License'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'pelenthium'
+                        name 'Sergey Lugovoy'
+                        email 'pelenthium@gmail.com'
+                    }
+                }
+            }
+        }
+    }
 }
