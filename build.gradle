@@ -28,7 +28,6 @@ dependencies {
 
 
 signing {
-    required { false }
     sign configurations.archives
 }
 
@@ -36,17 +35,18 @@ tasks.withType(Sign) {
     onlyIf { gradle.taskGraph.hasTask("publish") }
 }
 
+
 uploadArchives {
     repositories {
         mavenDeployer {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+                authentication(userName: findProperty('ossrhUsername')?ossrhUsername:'', password: findProperty('ossrhPassword')?ossrhPassword:'')
             }
 
             snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: hasProperty('ossrhUsername')?ossrhUsername:'', password: hasProperty('ossrhPassword')?ossrhPassword:'')
+                authentication(userName: findProperty('ossrhUsername')?ossrhUsername:'', password: findProperty('ossrhPassword')?ossrhPassword:'')
             }
 
             pom.project {
