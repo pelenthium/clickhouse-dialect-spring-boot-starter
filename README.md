@@ -1,8 +1,9 @@
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.pelenthium/clickhouse-dialect-spring-boot-starter)](https://maven-badges.herokuapp.com/maven-central/com.netflix.nebula/nebula-publishing-plugin)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![LinkedIn][linkedin-shield]][linkedin-url]
 <br />
 <h3 align="center">Clickhose Spring JDBC dialect</h3>
@@ -59,7 +60,7 @@ Use declare dependency as usual
 <!-- LICENSE -->
 ## License
 
-Distributed under the Apache 2 License. See `LICENSE` for more information.
+Distributed under the Apache 2 License. See [LICENSE][license-url] for more information.
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -73,7 +74,7 @@ Distributed under the Apache 2 License. See `LICENSE` for more information.
 [issues-shield]: https://img.shields.io/github/issues/pelenthium/clickhouse-dialect-spring-boot-starter.svg?style=flat-square
 [issues-url]: https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/issues
 [license-shield]: https://img.shields.io/github/license/pelenthium/clickhouse-dialect-spring-boot-starter.svg?style=flat-square
-[license-url]: https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/blob/master/LICENSE.txt
+[license-url]: https://github.com/pelenthium/clickhouse-dialect-spring-boot-starter/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/pelenthium
 [clickhouse-url]: https://clickhouse.com/
