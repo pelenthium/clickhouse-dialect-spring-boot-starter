@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.pelenthium/clickhouse-dialect-spring-boot-starter)](https://maven-badges.herokuapp.com/maven-central/com.netflix.nebula/nebula-publishing-plugin)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.pelenthium/clickhouse-dialect-spring-boot-starter)](https://maven-badges.herokuapp.com/maven-central/io.github.pelenthium/clickhouse-dialect-spring-boot-starter)
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
