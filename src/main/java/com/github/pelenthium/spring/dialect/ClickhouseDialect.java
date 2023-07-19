@@ -5,6 +5,11 @@ import org.springframework.data.relational.core.dialect.LimitClause;
 import org.springframework.data.relational.core.dialect.LockClause;
 import org.springframework.data.relational.core.sql.LockOptions;
 
+/**
+ * JDBC specific ClickHouse Dialect.
+ *
+ * @author Sergei Lugovoi
+ */
 public class ClickhouseDialect extends AnsiDialect {
 
     static final ClickhouseDialect INSTANCE = new ClickhouseDialect();
