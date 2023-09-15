@@ -42,7 +42,7 @@ First you need to add a maven repository to build.gradle
 And now declare dependency as usual
 
 ```groovy
-    implementation 'io.github.pelenthium:clickhouse-dialect-spring-boot-starter:1.1.0'
+    implementation 'io.github.pelenthium:clickhouse-dialect-spring-boot-starter:1.2.0'
 ```
 
 #### Maven
@@ -52,7 +52,7 @@ Use declare dependency as usual
 <dependency>
   <groupId>io.github.pelenthium</groupId>
   <artifactId>clickhouse-dialect-spring-boot-starter</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <type>pom</type>
 </dependency>
 ```
